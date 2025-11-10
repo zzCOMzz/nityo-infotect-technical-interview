@@ -22,13 +22,17 @@ onMounted(() => {
 })
 
 window.addEventListener('storage', checkAuth)
+
+const goToHome = () => {
+  router.push('/home')
+}
 </script>
 
 <template>
   <div id="app">
     <header class="top-navbar">
       <div class="navbar-container">
-        <div class="navbar-brand">
+        <div class="navbar-brand" @click="goToHome" style="cursor: pointer;">
           <h1>My App</h1>
         </div>
         
@@ -154,8 +158,6 @@ window.addEventListener('storage', checkAuth)
 /* Main Content */
 .main-content {
   flex: 1;
-  padding: 2rem 4rem;
-  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
@@ -184,9 +186,6 @@ window.addEventListener('storage', checkAuth)
     font-size: 1rem;
   }
   
-  .main-content {
-    padding: 1rem 0.5rem;
-  }
 }
 
 @media (max-width: 480px) {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { store } from '../store'
-import { ref, reactive, watch, nextTick } from 'vue'
+import { ref, reactive, watch } from 'vue'
 
 interface UserProfile {
   name: string | null
@@ -186,7 +186,7 @@ const isValidEmail = (email: string): boolean => {
 <style scoped>
 .user-profile {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 6rem auto;
   padding: 2rem;
   background: white;
   border-radius: 12px;
@@ -362,10 +362,10 @@ const isValidEmail = (email: string): boolean => {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 708px) {
   .user-profile {
     padding: 1rem;
-    margin: 1rem;
+    margin: 6rem 1rem;
   }
   
   .profile-header {

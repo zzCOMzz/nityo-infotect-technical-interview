@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import LoginView from "../views/LoginView.vue";
+import TodoView from "../views/TodoView.vue";
 import { store } from "@/store";
 
 const router = createRouter({
@@ -18,9 +19,15 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: "/home",
+      name: "home",
+      component: HomeView,
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/todo",
       name: "todo",
-      component: HomeView,
+      component: TodoView,
       meta: { requiresAuth: true },
     },
     {
@@ -44,7 +51,7 @@ router.beforeEach((to, from, next) => {
     next("/login");
   } else if (to.meta.requiresGuest && isAuthenticated) {
     store.updateHasLogin(true);
-    next("/profile");
+    next("/home");
   } else {
     next();
   }

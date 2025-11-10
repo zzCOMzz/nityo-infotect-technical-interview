@@ -59,7 +59,7 @@ const handleLogin = async () => {
     localStorage.setItem("profile", JSON.stringify({email, name}))
     store.updateHasLogin(true)
     window.dispatchEvent(new Event('storage'))
-    router.push('/profile')
+    router.push('/home')
   } catch (error : any) {
     state.error = error.response.data.error
   } finally {
