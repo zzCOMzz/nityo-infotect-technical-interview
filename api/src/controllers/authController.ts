@@ -8,8 +8,8 @@ export const signIn = async (req: Request, res: Response) => {
   if (!email || !password)
     res.status(400).json({ error: "Email and password are required" });
   try {
-    const token = await login({ email, password });
-    res.status(201).json({ message: "login successful", token });
+    const data = await login({ email, password });
+    res.status(201).json({ message: "login successful", data });
   } catch (error) {
     res.status(400).json({
       error: error instanceof Error ? error.message : "login failed!",
