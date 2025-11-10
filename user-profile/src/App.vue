@@ -7,7 +7,7 @@ const router = useRouter()
 const isAuthenticated = ref(false)
 
 const checkAuth = () => {
-  isAuthenticated.value = store.hasLogin
+  isAuthenticated.value = !!localStorage.getItem("token")
 }
 
 const logout = () => {

@@ -56,6 +56,7 @@ const handleLogin = async () => {
     const { email, name, token } = res.data.data
     store.updateProfile({ name , email})
     localStorage.setItem("token", token)
+    localStorage.setItem("profile", JSON.stringify({email, name}))
     store.updateHasLogin(true)
     window.dispatchEvent(new Event('storage'))
     router.push('/profile')

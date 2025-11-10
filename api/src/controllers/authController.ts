@@ -28,10 +28,10 @@ export const verifyToken = async (
     return res.status(401).json({ error: "Authorization header is required" });
   }
   const token = authHeader.split(" ")[1];
-  const isValid = jwt.verify(token, config.JWT_SECRET_KEY);
-
-  if (!isValid) {
-    return res.status(401).json({ error: "Invalid token" });
-  }
-  next();
+  jwt.verify(token, config.JWT_SECRET_KEY, (err: any) => {
+    if (err) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    return next();
+  });
 };

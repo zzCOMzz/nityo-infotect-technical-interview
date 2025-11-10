@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { store } from '@/store'
+import { store } from '../store'
 import { ref, reactive, watch, nextTick } from 'vue'
 
 interface UserProfile {
@@ -131,7 +131,7 @@ const isValidEmail = (email: string): boolean => {
           <div class="profile-picture-wrapper">
             <img 
               :src="profile.profilePicture" 
-              :alt="profile.name"
+              :alt="profile.name || 'profile'"
               class="profile-picture"
               @error="profile.profilePicture = 'https://via.placeholder.com/150/666/FFFFFF?text=No+Image'"
             />

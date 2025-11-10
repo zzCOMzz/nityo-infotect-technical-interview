@@ -33,11 +33,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = store.hasLogin;
+  const isAuthenticated = !!localStorage.getItem("token");
+  const user = localStorage.getItem("profile");
+  const profile = user ? JSON.parse(user) : null;
+  if (!!profile) {
+    store.updateProfile(profile);
+  }
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next("/login");
   } else if (to.meta.requiresGuest && isAuthenticated) {
+    store.updateHasLogin(true);
     next("/profile");
   } else {
     next();

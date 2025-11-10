@@ -15,7 +15,7 @@ const login = async ({ email, password }: Partial<User>) => {
     throw new Error("Invalid password");
   }
 
-  const token = jwt.sign({ id: user.email }, config.JWT_SECRET_KEY, {
+  const token = jwt.sign({ email: user.email }, config.JWT_SECRET_KEY, {
     expiresIn: "1d",
   });
 
