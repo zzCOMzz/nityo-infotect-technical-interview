@@ -6,13 +6,13 @@ const login = async ({ email, password }: Partial<User>) => {
   const user: User | undefined = users.find((user) => email === user.email);
 
   if (!user) {
-    throw new Error("no user found!");
+    throw new Error("No user found!");
   }
 
   const passMatch = user.password === password;
 
   if (!passMatch) {
-    throw new Error("password did not match");
+    throw new Error("Invalid password");
   }
 
   const token = jwt.sign({ id: user.email }, config.JWT_SECRET_KEY, {
