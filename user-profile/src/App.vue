@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import { store } from './store'
 
 const router = useRouter()
 const isAuthenticated = ref(false)
 
 const checkAuth = () => {
-  isAuthenticated.value = localStorage.getItem('isAuthenticated') === 'true'
+  isAuthenticated.value = store.hasLogin
 }
 
 const logout = () => {
-  localStorage.removeItem('isAuthenticated')
-  localStorage.removeItem('userEmail')
-  isAuthenticated.value = false
+  localStorage.removeItem('token')
+  store.updateHasLogin(false)
+  store.updateProfile({ name : null, email : null})
   router.push('/login')
 }
 

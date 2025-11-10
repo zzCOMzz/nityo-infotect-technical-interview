@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { store } from '../store'
+import axios from '../axios'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -47,22 +49,18 @@ const handleLogin = async () => {
   state.error = null
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    if (form.email === 'irvan@email.com' && form.password === 'password123') {
-      console.log('Login successful:', form.email)
-      
-      localStorage.setItem('isAuthenticated', 'true')
-      localStorage.setItem('userEmail', form.email)
-      window.dispatchEvent(new Event('storage'))
-
-      router.push('/profile')
-    } else {
-      state.error = 'Invalid email or password'
-    }
-  } catch (error) {
-    state.error = 'Login failed. Please try again.'
-    console.error('Login error:', error)
+    const res = await axios.post('/api/login', {
+      email : form.email,
+      password : form.password
+    })
+    const { email, name, token } = res.data.data
+    store.updateProfile({ name , email})
+    localStorage.setItem("token", token)
+    store.updateHasLogin(true)
+    window.dispatchEvent(new Event('storage'))
+    router.push('/profile')
+  } catch (error : any) {
+    state.error = error.response.data.error
   } finally {
     state.isLoading = false
   }
@@ -104,7 +102,7 @@ const clearError = () => {
               required
               @input="clearError"
             />
-            <span class="input-icon">📧</span>
+            <span class="input-icon pi pi-envelope"></span>
           </div>
           <div v-if="form.email && !isValidEmail(form.email)" class="error-text">
             Please enter a valid email address
@@ -133,7 +131,7 @@ const clearError = () => {
               @click="togglePasswordVisibility"
               :title="state.showPassword ? 'Hide password' : 'Show password'"
             >
-              {{ state.showPassword ? '🙈' : '👁️' }}
+              <i :class="state.showPassword ? 'pi pi-eye' : 'pi pi-eye-slash'"></i>
             </button>
           </div>
           <div v-if="form.password && form.password.length < 6" class="error-text">
@@ -156,6 +154,12 @@ const clearError = () => {
           <span v-else>Sign In</span>
         </button>
       </form>
+
+      <div class="demo-credentials">
+        <h4>Demo Credentials:</h4>
+        <p><strong>Email:</strong> irvan@email.com</p>
+        <p><strong>Password:</strong> password123</p>
+      </div>
 
       
     </div>
@@ -354,6 +358,28 @@ const clearError = () => {
   100% { transform: rotate(360deg); }
 }
 
+.demo-credentials {
+  background: #f0f9ff;
+  border: 1px solid #e0f2fe;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.demo-credentials h4 {
+  color: #0369a1;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.demo-credentials p {
+  color: #0c4a6e;
+  font-size: 0.8rem;
+  margin: 0.25rem 0;
+  font-family: monospace;
+}
 
 @media (max-width: 480px) {
   .login-card {

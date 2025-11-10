@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { store } from '@/store'
 import { ref, reactive, watch, nextTick } from 'vue'
 
 interface UserProfile {
-  name: string
-  email: string
+  name: string | null
+  email: string | null
   profilePicture: string
 }
 
@@ -14,8 +15,8 @@ interface SaveStatus {
 }
 
 const profile = reactive<UserProfile>({
-  name: 'M. Irvan refnaldy',
-  email: 'irvan@email.com',
+  name: store.name,
+  email: store.email,
   profilePicture: 'https://placehold.co/150?text=IR'
 })
 
