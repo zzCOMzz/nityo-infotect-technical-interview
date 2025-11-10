@@ -15,7 +15,7 @@ interface SaveStatus {
 
 const profile = reactive<UserProfile>({
   name: 'M. Irvan refnaldy',
-  email: 'irvan.refnaldy@example.com',
+  email: 'irvan@email.com',
   profilePicture: 'https://placehold.co/150?text=IR'
 })
 

@@ -1,4 +1,4 @@
-import { type Request, type Response } from "express";
+import type { Request, Response } from "express";
 import todosServices from "../services/todoServices";
 
 export const getTodos = async (req: Request, res: Response) => {
